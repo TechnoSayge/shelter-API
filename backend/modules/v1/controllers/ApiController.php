@@ -12,6 +12,8 @@ use yii\rest\Controller;
 use yii\filters\auth\HttpBearerAuth;
 use frontend\models\SignupForm;
 use common\models\User;
+use app\modules\v1\models\ShelterTable;
+
 
 /**
  * Site controller
@@ -74,7 +76,7 @@ class ApiController extends Controller
         $model = new SignupForm();
         $request = Yii::$app->request;
         $get = $request->get();
-        $model->attributes =Yii::$app->request->get();
+        $model->attributes = Yii::$app->request->get();
         if ($model->validate() && $model->signup()) {
             return ['signup' => true,
                   ];
@@ -98,6 +100,36 @@ class ApiController extends Controller
     {
         $response = 5;
         return $response;
+    }
+
+    public function actionGetallshelters()
+    {
+
+      $response = (new \yii\db\Query())
+      ->select('*')
+      ->from('shelter_table')
+      ->all();
+
+      return $response;
+    }
+
+
+    public function actionGetalltypes()
+    {
+
+      $response = (new \yii\db\Query())
+      ->select('*')
+      ->from('type_table')
+      ->all();
+
+      return $response;
+    }
+
+    public function actionSignupshelter()
+    {
+        $request = Yii::$app->request;
+        $get = $request->get();
+        return $get;
     }
 
 
